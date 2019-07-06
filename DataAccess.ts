@@ -1,11 +1,9 @@
 import Mongoose = require("mongoose");
 
-//var atlas_password = process.env.ATLAS_PASSWORD;
-
 class DataAccess {
     static mongooseInstance: any;
     static mongooseConnection: Mongoose.Connection;
-    static DB_CONNECTION_STRING:string = 'mongodb+srv://dbAdmin:cFCCNPq5pk1k6308@cluster0-xuirm.azure.mongodb.net/test?retryWrites=true&w=majority'
+    static DB_CONNECTION_STRING:string = 'mongodb+srv://dbAdmin:cFCCNPq5pk1k6308@cluster0-xuirm.azure.mongodb.net/dev?retryWrites=true&w=majority'
     
     constructor () {
         DataAccess.connect();

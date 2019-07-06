@@ -3,25 +3,31 @@ import * as express from 'express';
 import * as logger from 'morgan';
 import * as url from 'url';
 import * as bodyParser from 'body-parser';
+import { ChatMessageModel } from './models/ChatMessageModel';
 
 // Creates and configures an ExpressJS web server.
 class App {
 
   // ref to Express instance
-  public express: express.Application;
+  public expressApp: express.Application;
+
+  public ChatMessages:ChatMessageModel;
+  public idGenerator:number;
 
   //Run configuration methods on the Express instance.
   constructor() {
-    this.express = express();
+    this.expressApp = express();
     this.middleware();
     this.routes();
+    this.idGenerator = 200;
+    this.ChatMessages = new ChatMessageModel();
   }
 
   // Configure Express middleware.
   private middleware(): void {
-    this.express.use(logger('dev'));
-    this.express.use(bodyParser.json());
-    this.express.use(bodyParser.urlencoded({ extended: false }));
+    this.expressApp.use(logger('dev'));
+    this.expressApp.use(bodyParser.json());
+    this.expressApp.use(bodyParser.urlencoded({ extended: false }));
   }
 
   // Configure API endpoints.
@@ -31,60 +37,18 @@ class App {
      * API endpoints */
     let router = express.Router();
 
-    router.get('/one', (req, res, next) => {
-        res.send('request one');
-    });
+    router.get('/api/chatmessages', (req, res) => {
+      console.log('Query all Chat Messsages');
+      this.ChatMessages.retrieveAllChatMessages(res);
+    })
 
-    router.get('/add', (req, res, next) => {
-        let urlParts:any = url.parse(req.url, true);
-        let query:any = urlParts.query;
+    router.get('/', (req, res) => {
+      res.send("Hello");
+    })
 
-        console.log('var1:' + query.var1);
-        console.log('var2:' + query.var2);
-
-         let value1: number = parseInt(query.var1);
-         let value2: number = parseInt(query.var2);
-         let sum: number = value1 + value2;
-        
-        //var sum = query.var1 + query.var2;
-        var msg = 'addition of ' + query.var1 + ' plus ' + query.var2 + ' equals ' + sum;
-
-        console.log(msg);
-
-        res.send(msg);
-    });
-
-    let fname2;
-
-    router.get('/name/:fname', (req, res, next) => {
-        let name:string;
-
-	    console.log(':fname = ' + req.params.fname);
-
-        if (req.params.fname === 'israelh') {
-            name = fname2 + ' hilerio';
-        }
-        else {
-            name = fname2 + ' world';
-        }
-
-        console.log(name);
-
-        res.send("Your name is: "  + name);
-    });
-
-    router.param('fname', (req, res, next, value) => {
-        console.log('The param value is: ' + value);
-
-        fname2 = value + "-ABC";
-
-        next();
-    });
-
-    this.express.use('/', router);
-
-    this.express.use('/images', express.static(__dirname+'/img'));
-    this.express.use('/', express.static(__dirname+'/pages'));
+    this.expressApp.use('/', router);
+    this.expressApp.use('/app/json/', express.static(__dirname+'/app/json'));
+    this.expressApp.use('/images', express.static(__dirname+'/img'));
 
   }
 
