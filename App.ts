@@ -30,12 +30,6 @@ class App {
      * working so far. This function will change when we start to add more
      * API endpoints */
     let router = express.Router();
-    
-    // router.get('/', (req, res, next) => {
-    //   res.json({
-    //     message: 'Hello World!'
-    //   });
-    // });
 
     router.get('/one', (req, res, next) => {
         res.send('request one');
