@@ -31,6 +31,22 @@ var App = /** @class */ (function () {
             console.log('Query all Chat Messsages');
             _this.ChatMessages.retrieveAllChatMessages(res);
         });
+        router.get('/api/chatmessages/:id', function (req, res) {
+            console.log('Query one Chat Message with id: ' + req.params.id);
+            _this.ChatMessages.retrieveOneChatMessage(res, req.params.id);
+        });
+        router.post('/api/chatmessages/', function (req, res) {
+            console.log(req.body);
+            var jsonObj = req.body;
+            jsonObj.messageID = _this.idGenerator;
+            _this.ChatMessages.model.create([jsonObj], function (err) {
+                if (err) {
+                    console.log('Chat Message creation failed');
+                }
+            });
+            res.send(_this.idGenerator.toString());
+            _this.idGenerator++;
+        });
         router.get('/', function (req, res) {
             res.send("Hello");
         });

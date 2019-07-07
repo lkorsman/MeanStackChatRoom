@@ -29,10 +29,8 @@ class ChatMessageModel {
     }
 
     public retrieveAllChatMessages(response:any): any {
-        console.log("In retrieve all messages");
         var query = this.model.find({});
         query.exec( (err, results) => {
-            console.log("query executed");
             response.json(results) ;
         });
     }

@@ -20,10 +20,8 @@ var ChatMessageModel = /** @class */ (function () {
         this.model = mongooseConnection.model("messages", this.schema);
     };
     ChatMessageModel.prototype.retrieveAllChatMessages = function (response) {
-        console.log("In retrieve all messages");
         var query = this.model.find({});
         query.exec(function (err, results) {
-            console.log("query executed");
             response.json(results);
         });
     };

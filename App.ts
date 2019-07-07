@@ -42,6 +42,24 @@ class App {
       this.ChatMessages.retrieveAllChatMessages(res);
     })
 
+    router.get('/api/chatmessages/:id', (req, res) => {
+      console.log('Query one Chat Message with id: ' + req.params.id);
+      this.ChatMessages.retrieveOneChatMessage(res, req.params.id);
+    })
+
+    router.post('/api/chatmessages/', (req, res) => {
+      console.log(req.body);
+      var jsonObj = req.body;
+      jsonObj.messageID = this.idGenerator;
+      this.ChatMessages.model.create([jsonObj], (err) => {
+        if (err) {
+          console.log('Chat Message creation failed');
+        }
+      });
+      res.send(this.idGenerator.toString());
+      this.idGenerator++;
+    });
+
     router.get('/', (req, res) => {
       res.send("Hello");
     })
