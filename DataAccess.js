@@ -15,7 +15,7 @@ var DataAccess = /** @class */ (function () {
         this.mongooseInstance = Mongoose.connect(this.DB_CONNECTION_STRING);
         return this.mongooseInstance;
     };
-    DataAccess.DB_CONNECTION_STRING = 'mongodb+srv://dbAdmin:cFCCNPq5pk1k6308@cluster0-xuirm.azure.mongodb.net/dev?retryWrites=true&w=majority';
+    DataAccess.DB_CONNECTION_STRING = 'mongodb+srv://dbAdmin:<password>@cluster0-xuirm.azure.mongodb.net/dev?retryWrites=true&w=majority';
     return DataAccess;
 }());
 exports.DataAccess = DataAccess;
