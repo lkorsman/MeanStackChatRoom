@@ -4,6 +4,7 @@ var express = require("express");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 var ChatMessageModel_1 = require("./models/ChatMessageModel");
+var cors = require('cors');
 // Creates and configures an ExpressJS web server.
 var App = /** @class */ (function () {
     //Run configuration methods on the Express instance.
@@ -19,6 +20,7 @@ var App = /** @class */ (function () {
         this.expressApp.use(logger('dev'));
         this.expressApp.use(bodyParser.json());
         this.expressApp.use(bodyParser.urlencoded({ extended: false }));
+        this.expressApp.use(cors());
     };
     // Configure API endpoints.
     App.prototype.routes = function () {

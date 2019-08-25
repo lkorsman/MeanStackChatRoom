@@ -4,6 +4,7 @@ import * as logger from 'morgan';
 import * as url from 'url';
 import * as bodyParser from 'body-parser';
 import { ChatMessageModel } from './models/ChatMessageModel';
+const cors = require('cors');
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -28,6 +29,7 @@ class App {
     this.expressApp.use(logger('dev'));
     this.expressApp.use(bodyParser.json());
     this.expressApp.use(bodyParser.urlencoded({ extended: false }));
+    this.expressApp.use(cors());
   }
 
   // Configure API endpoints.
